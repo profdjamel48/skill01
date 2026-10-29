@@ -77,14 +77,6 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
   box-shadow:0 3px 10px rgba(31,47,61,.14);pointer-events:none;opacity:0;visibility:hidden;
   transition:opacity .12s ease}
 #tool-tooltip.visible{opacity:1;visibility:visible}
-#desktop-warning{position:fixed;inset:0;z-index:1000;display:none;flex-direction:column;align-items:center;
-  justify-content:center;gap:24px;padding:24px;background:#000;color:#fff;text-align:center;font-size:20px;line-height:1.7}
-.device-icons{display:flex;align-items:center;justify-content:center;gap:36px}
-.device-icon{width:72px;height:72px;fill:none;stroke:currentColor;stroke-width:2;
-  stroke-linecap:round;stroke-linejoin:round}
-.device-icon.computer{color:#39c46a}
-.device-icon.phone{color:#ddd}
-.phone-mark{stroke:#f04444;stroke-width:3}
  .panel-toggle{position:fixed;z-index:20;inset-block-start:50%;right:14px;transform:translateY(-50%);
   width:44px;height:44px;border:1px solid rgba(47,111,143,.25);border-radius:14px;background:#fff;
   color:var(--acc);box-shadow:0 4px 16px rgba(31,47,61,.16);display:grid;place-items:center;cursor:pointer}
@@ -96,9 +88,19 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
   #sidebar,#bench-stage,#tool-tooltip{transition:none}
   .sb-scroll{scroll-behavior:auto}
 }
-@media (max-width:800px), (max-height:500px){
-  #app,.panel-toggle{display:none}
-  #desktop-warning{display:flex}
+@media (max-width:760px) and (orientation:portrait){
+  #app{flex-direction:column}
+  #app.panel-open #bench-stage{margin:0 0 min(38dvh,380px)}
+  #sidebar{inset:auto 0 0;width:100%;height:min(38dvh,380px);max-height:min(38dvh,380px);
+    transform:translateY(105%);border-inline:0;border-top:1px solid var(--line)}
+  #sidebar.open{transform:translateY(0)}
+  .sb-head{padding:10px 16px 6px}.sb-scroll{padding:0 16px 8px}
+  .sb-foot{gap:10px;padding:7px 16px 10px}
+  .collapse-tab{position:absolute;top:0;right:auto;left:50%;transform:translate(-50%,-100%);
+    width:56px;height:36px;border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0}
+  .collapse-tab svg{transform:rotate(-90deg)}
+  .panel-toggle{top:auto;right:auto;bottom:14px;left:50%;transform:translateX(-50%);
+    width:44px;height:44px;border-radius:14px}
 }
 </style>
 </head>
@@ -128,18 +130,6 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
     </footer>
   </aside>
   <main id="bench-stage"><canvas id="bench" tabindex="0"></canvas><div id="tool-tooltip" role="tooltip" aria-hidden="true"></div></main>
-</div>
-<div id="desktop-warning" role="status">
-  <div class="device-icons" aria-hidden="true">
-    <svg class="device-icon computer" viewBox="0 0 64 64">
-      <rect x="7" y="8" width="50" height="39" rx="3"/><path d="M23 56h18m-9-9v9M15 56h34"/>
-    </svg>
-    <svg class="device-icon phone" viewBox="0 0 64 64">
-      <rect x="20" y="5" width="24" height="54" rx="5"/><path d="M28 12h8m-4 38v1"/>
-      <path class="phone-mark" d="m27 25 10 10m0-10L27 35"/>
-    </svg>
-  </div>
-  <div>هذه المحاكاة مخصصة للشاشات الكبيرة. يرجى فتحها من جهاز حاسوب.</div>
 </div>
 <button id="open-panel" class="panel-toggle" type="button" aria-label="إظهار قائمة الخطوات"
   aria-controls="sidebar" aria-expanded="true" title="إظهار قائمة الخطوات">
